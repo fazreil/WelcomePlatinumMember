@@ -2,6 +2,15 @@ import requests
 import json
 import os
 
+def get_movie_query(message):
+  words = message.split()
+  words.remove("movie")
+  returnWord = []
+  for word in words:
+    if not ('bal' in word):
+      returnWord.append(word)
+  return returnWord
+
 def get_movie(query):
   request_string = "https://api.themoviedb.org/3/search/movie?api_key="+os.getenv('TMDB_KEY')+"&language=en-US&query="+str(query)
   print(request_string)

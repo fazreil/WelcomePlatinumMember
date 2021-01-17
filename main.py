@@ -4,10 +4,11 @@ import os
 import random
 import corona
 import movie
+import solat
 
 client = discord.Client()
 
-ack_words = ["ok", "baik", "orait", "roger", "aye aye", "affirmative", "okie-dokie", "okie-doke"]
+ack_words = ["ok", "baik", "orait", "roger", "aye aye", "affirmative", "okie-dokie", "okie-doke", ":thumbsup:", ":+1:", ":thumbup:", ":eyes:", ":100:"]
 
 def get_random_ack():
   return(random.choice(ack_words))
@@ -30,11 +31,17 @@ async def on_message(message):
     if 'corona' in message.content:
       await message.channel.send(corona.get_corona_update())
     elif 'movie' in message.content:
-      movie_query = get_last_word(message.content)
-      movie_list = movie.get_movie(movie_query)
+      movie_query = movie.get_movie_query(message.content)
+      movie_list = movie.get_movie(str(movie_query))
       await message.channel.send(movie_list)
+    elif 'solat' in message.content:
+      await message.channel.send(solat.get_solat_time())
     else:
-      await message.channel.send('Ye '+message.author.name+' apa boleh sy bantu?')
+      help_msg = 'Ye '+message.author.name+' apa boleh sy bantu? keyword: '
+      help_msg = help_msg + '\n*corona* - kalau nak tau statistic harini'
+      help_msg = help_msg + '\n*movie* - kalau nak aku search movie'
+      help_msg = help_msg + '\n*solat* - kalau nak aku aku lookup waktu solat '
+      await message.channel.send(help_msg)
   
 keep_alive()
 client.run(os.getenv('TOKEN'))
