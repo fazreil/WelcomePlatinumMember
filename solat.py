@@ -13,7 +13,6 @@ def get_solat_time():
   response = requests.get("http://mpt.i906.my/mpt.json?code=wlp-0&filter=1")
   json_data = json.loads(response.text)
   responses = json_data['response']
-  print(responses)
   subuh = responses['times'][0]
   syuruk = responses['times'][1]
   zohor = responses['times'][2]
@@ -23,9 +22,7 @@ def get_solat_time():
   
   kl = pytz.timezone('Asia/Kuala_Lumpur')
   today = datetime.datetime.fromtimestamp(subuh,tz=kl).strftime("%d-%m-%Y")
-  print(today)
   message = "Ni waktu solat area KL untuk harini ("+today+")\n"
-  print(message)
   message = message + "Subuh: "+format_time_to_my(subuh)+"\n"
   message = message + "Syuruk: "+format_time_to_my(syuruk)+"\n"
   message = message + "Zohor: "+format_time_to_my(zohor)+"\n"
