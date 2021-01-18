@@ -18,6 +18,8 @@ def get_movie(query):
   json_data = json.loads(response.text)
   results = json_data['results']
   movies = ""
+  if(results == []):
+    return("sorry xde movie tu :cry:")
   for result in results:
     title = result['original_title']
     movies = movies + title
