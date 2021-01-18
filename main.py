@@ -39,7 +39,7 @@ async def on_message(message):
     else:
       help_msg = 'Ye '+message.author.name+' apa boleh sy bantu? keyword: '
       help_msg = help_msg + '\n*corona* - kalau nak tau statistic harini'
-      help_msg = help_msg + '\n*movie* - kalau nak aku search movie'
+      help_msg = help_msg + '\n*movie* <keywords> - kalau nak aku search movie based on keyword[s]'
       help_msg = help_msg + '\n*solat* - kalau nak aku aku lookup waktu solat KL'
       await message.channel.send(help_msg)
   

@@ -23,9 +23,9 @@ def get_movie(query):
     movies = movies + title
     try:
       releaseDate = result['release_date']
-      movies = movies + "(" +releaseDate+ ")"
+      movies = movies + " (" +releaseDate+ ")"
     except:
-      movies = movies + "(no release date info)"
+      movies = movies + " (no release date info)"
     movies = movies + "\n"
   if json_data['page']<json_data['total_pages']:
     movies = movies + "..\n..try refine search ko."
