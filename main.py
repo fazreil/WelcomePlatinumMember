@@ -5,6 +5,7 @@ import random
 import corona
 import movie
 import solat
+import cuti
 
 client = discord.Client()
 
@@ -36,11 +37,15 @@ async def on_message(message):
       await message.channel.send(movie_list)
     elif 'solat' in message.content:
       await message.channel.send(solat.get_solat_time())
+    elif 'cuti' in message.content:
+      for messages in cuti.get_cuti(get_last_word(message.content)):
+        await message.channel.send(messages)
     else:
       help_msg = 'Ye '+message.author.name+' apa boleh sy bantu? keyword: '
       help_msg = help_msg + '\n*corona* - kalau nak tau statistic harini'
       help_msg = help_msg + '\n*movie* <keywords> - kalau nak aku search movie based on keyword[s]'
       help_msg = help_msg + '\n*solat* - kalau nak aku aku lookup waktu solat KL'
+      help_msg = help_msg + '\n*cuti* <bulan dalam integer> - aku list down cuti dalam bulan tu, default to current month'
       await message.channel.send(help_msg)
   
 keep_alive()
