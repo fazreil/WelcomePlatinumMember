@@ -27,18 +27,20 @@ async def on_message(message):
   if message.author == client.user:
     return
 
-  if 'bal' in message.content:
+  msg = message.content.lower()
+
+  if 'bal' in msg:
     await message.channel.send(get_random_ack()+" "+message.author.name)
-    if 'corona' in message.content:
+    if 'corona' in msg:
       await message.channel.send(corona.get_corona_update())
-    elif 'movie' in message.content:
-      movie_query = movie.get_movie_query(message.content)
+    elif 'movie' in msg:
+      movie_query = movie.get_movie_query(msg)
       movie_list = movie.get_movie(str(movie_query))
       await message.channel.send(movie_list)
-    elif 'solat' in message.content:
+    elif 'solat' in msg:
       await message.channel.send(solat.get_solat_time())
-    elif 'cuti' in message.content:
-      for messages in cuti.get_cuti(get_last_word(message.content)):
+    elif 'cuti' in msg:
+      for messages in cuti.get_cuti(get_last_word(msg)):
         await message.channel.send(messages)
     else:
       help_msg = 'Ye '+message.author.name+' apa boleh sy bantu? keyword: '
