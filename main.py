@@ -6,6 +6,7 @@ import movie
 import solat
 import cuti
 import utility_shorties as us
+import praise
 
 client = discord.Client()
 
@@ -42,12 +43,17 @@ async def on_message(message):
     elif 'cuti' in msg:
       for messages in cuti.get_cuti(us.get_last_word(msg)):
         await message.channel.send(messages)
+    elif 'praise' in msg:      
+        print(msg)
+        await praise.prepare_praise(msg, message, client)
+
     else:
       help_msg = 'Ye '+message.author.name+' apa boleh sy bantu? keyword: '
       help_msg = help_msg + '\n*corona* - kalau nak tau statistic harini'
       help_msg = help_msg + '\n*movie* <keywords> - kalau nak aku search movie based on keyword[s]'
       help_msg = help_msg + '\n*solat* - kalau nak aku aku lookup waktu solat KL'
       help_msg = help_msg + '\n*cuti* <bulan dalam integer> - aku list down cuti dalam bulan tu, default to current month'
+      help_msg = help_msg + '\n*praise* <mention sorg user> - aku puji sikit user tu, xbanyak, sikit ja'
       await message.channel.send(help_msg)
   
 keep_alive()
