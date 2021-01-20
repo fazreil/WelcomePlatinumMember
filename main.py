@@ -1,22 +1,22 @@
 from keep_alive import keep_alive
 import discord
 import os
-import random
 import corona
 import movie
 import solat
 import cuti
+import utility_shorties as us
 
 client = discord.Client()
 
 ack_words = ["ok", "baik", "orait", "roger", "aye aye", "affirmative", "okie-dokie", "okie-doke", ":thumbsup:", ":+1:", ":thumbup:", ":eyes:", ":100:"]
 
-def get_random_ack():
-  return(random.choice(ack_words))
-
-def get_last_word(message):
-  words = message.split()
-  return(str(words[-1]))
+def is_bal_in(message):
+  words = list(message.split(" "))
+  for word in words:
+    if(word == "bal"):
+      return True
+  return False
 
 @client.event
 async def on_ready():
@@ -29,8 +29,8 @@ async def on_message(message):
 
   msg = message.content.lower()
 
-  if 'bal' in msg:
-    await message.channel.send(get_random_ack()+" "+message.author.name)
+  if is_bal_in(msg):
+    await message.channel.send(us.get_random(ack_words)+" "+message.author.name)
     if 'corona' in msg:
       await message.channel.send(corona.get_corona_update())
     elif 'movie' in msg:
@@ -40,7 +40,7 @@ async def on_message(message):
     elif 'solat' in msg:
       await message.channel.send(solat.get_solat_time())
     elif 'cuti' in msg:
-      for messages in cuti.get_cuti(get_last_word(msg)):
+      for messages in cuti.get_cuti(us.get_last_word(msg)):
         await message.channel.send(messages)
     else:
       help_msg = 'Ye '+message.author.name+' apa boleh sy bantu? keyword: '
