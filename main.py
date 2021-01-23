@@ -8,6 +8,7 @@ import cuti
 import utility_shorties as us
 import praise
 import maksud
+import wolfram
 
 client = discord.Client()
 
@@ -51,7 +52,10 @@ async def on_message(message):
       msg_wo_bal = us.filter(msg,['bal','iqbal'])
       msg_wo_bal_kw = us.filter(us.list_to_string(msg_wo_bal),maksud_keywords)
       await maksud.translate(msg_wo_bal_kw, message)
-
+    elif '?' in msg:
+      msg_wo_bal = us.list_to_string(us.filter(msg,['bal']))
+      translated = await maksud.translate_string(msg_wo_bal)
+      await wolfram.ask(translated, message)
     else:
       help_msg = 'Ye '+message.author.name+' apa boleh sy bantu? keyword: '
       help_msg = help_msg + '\n*corona* - kalau nak tau statistic harini'
@@ -60,6 +64,7 @@ async def on_message(message):
       help_msg = help_msg + '\n*cuti* <bulan dalam integer> - aku list down cuti dalam bulan tu, default to current month'
       help_msg = help_msg + '\n*praise* <mention sorg user> - aku puji sikit user tu, xbanyak, sikit ja'
       help_msg = help_msg + '\n*maksud, meaning, translate, alih* <frasa bahasa melayu> - aku translate jadi en-US'
+      help_msg = help_msg + '\n suffix *?* - nanti aku cari jawapan soalan korg, insya Allah'
       await message.channel.send(help_msg)
   
 keep_alive()

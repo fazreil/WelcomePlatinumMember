@@ -21,3 +21,6 @@ async def translate(msg,message):
   query = " ".join(msg)
   await message.channel.send("```"+fetch_translation(query,"en","my")+"```")
 
+async def translate_string(msg):
+  translated_query = fetch_translation(msg,"en","my")
+  return translated_query
