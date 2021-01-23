@@ -7,10 +7,12 @@ import solat
 import cuti
 import utility_shorties as us
 import praise
+import maksud
 
 client = discord.Client()
 
 ack_words = ["ok", "baik", "orait", "roger", "aye aye", "affirmative", "okie-dokie", "okie-doke", ":thumbsup:", ":+1:", ":thumbup:", ":eyes:", ":100:"]
+maksud_keywords = ["maksud","meaning","translate","alih"]
 
 def is_bal_in(message):
   words = list(message.split(" "))
@@ -43,9 +45,12 @@ async def on_message(message):
     elif 'cuti' in msg:
       for messages in cuti.get_cuti(us.get_last_word(msg)):
         await message.channel.send(messages)
-    elif 'praise' in msg:      
-        print(msg)
-        await praise.prepare_praise(msg, message, client)
+    elif 'praise' in msg:     
+      await praise.prepare_praise(msg, message, client)
+    elif us.keyword_in(maksud_keywords,msg):
+      msg_wo_bal = us.filter(msg,['bal','iqbal'])
+      msg_wo_bal_kw = us.filter(us.list_to_string(msg_wo_bal),maksud_keywords)
+      await maksud.translate(msg_wo_bal_kw, message)
 
     else:
       help_msg = 'Ye '+message.author.name+' apa boleh sy bantu? keyword: '
@@ -54,6 +59,7 @@ async def on_message(message):
       help_msg = help_msg + '\n*solat* - kalau nak aku aku lookup waktu solat KL'
       help_msg = help_msg + '\n*cuti* <bulan dalam integer> - aku list down cuti dalam bulan tu, default to current month'
       help_msg = help_msg + '\n*praise* <mention sorg user> - aku puji sikit user tu, xbanyak, sikit ja'
+      help_msg = help_msg + '\n*maksud, meaning, translate, alih* <frasa bahasa melayu> - aku translate jadi en-US'
       await message.channel.send(help_msg)
   
 keep_alive()

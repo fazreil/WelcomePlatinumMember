@@ -22,14 +22,12 @@ async def prepare_praise(msg, message, client):
   else:
     try:
       discord_id = us.get_last_word(msg)
-      print(discord_id[3:-1])
       user = await client.fetch_user(discord_id[3:-1]) #desktop client
       await message.channel.send(content="**"+praise(user)+"**", embed=embed(user))
     except Exception as e:
       try:
         print(str(e))
         discord_id = us.get_last_word(msg)
-        print(discord_id[2:-1])
         user = await client.fetch_user(discord_id[2:-1]) #mobile client
         await message.channel.send(content="**"+praise(user)+"**", embed=embed(user))
       except Exception as f:
